@@ -4,12 +4,8 @@ run_program("/sbin/busybox", "mount", "/system");
 ui_print("Extracting package...");
 package_extract_dir("app", "/system/app");
 
-
 ui_print("set permissions...");
 set_perm(0,0,0644,"/system/app/LatinIME/lib/arm/libjni_latinimegoogle.so");
-
-ui_print("create symlink...");
-ln -sfn "/system/lib/libjni_latinimegoogle.so" "/system/app/LatinIME/lib/arm/libjni_latinimegoogle.so"
 
 ui_print("Unmounting /system...");
 unmount("/system");
