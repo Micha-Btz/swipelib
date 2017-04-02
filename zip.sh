@@ -1,7 +1,7 @@
 #! /bin/bash
 FILE=swipelib
-VERSION=0.3.1
-CM_Version=cm-13.0
+VERSION=0.4
+CM_Version=LOS-14.1
 NAME=($FILE-$CM_Version-$VERSION)
 
 echo "Making Zip"
