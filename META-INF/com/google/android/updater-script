@@ -3,11 +3,11 @@ run_program("/sbin/busybox", "mount", "/system");
 
 ui_print("Extracting package...");
 package_extract_dir("lib", "/system/lib");
-
-
 ui_print("set permissions...");
 set_perm(0,0,0644,"/system/lib/libjni_latinimegoogle.so");
-
+package_extract_dir("addon.d", "/system/addon.d");
+ui_print("set permissions...");
+set_perm(0,0,0755,"/system/addon.d/78-addonsu.sh");
 ui_print("Unmounting /system...");
 unmount("/system");
 
