@@ -1,14 +1,25 @@
-ui_print("Mounting /system...");
-run_program("/sbin/busybox", "mount", "/system");
+ui_print("Installing swipelib addon...");
+ifelse(is_mounted("/system"), unmount("/system"));
+package_extract_file("mount-system.sh", "/tmp/mount-system.sh");
+package_extract_file("unmount-system.sh", "/tmp/unmount-system.sh");
+set_metadata("/tmp/mount-system.sh", "uid", 0, "gid", 0, "mode", 0755);
+set_metadata("/tmp/unmount-system.sh", "uid", 0, "gid", 0, "mode", 0755);
+run_program("/tmp/mount-system.sh") == 0 || abort("Could not mount /system");
 
-ui_print("Extracting package...");
-package_extract_dir("lib", "/system/lib");
-ui_print("set permissions...");
-set_perm(0,0,0644,"/system/lib/libjni_latinimegoogle.so");
-package_extract_dir("addon.d", "/system/addon.d");
-ui_print("set permissions...");
-set_perm(0,0,0755,"/system/addon.d/78-swipelib.sh");
-ui_print("Unmounting /system...");
-unmount("/system");
+if getprop("ro.build.system_root_image") != "true" then
+  package_extract_dir("system", "/system");
+  set_metadata("/system/addon.d/78-swipelib.sh", "uid", 0, "gid", 0, "mode", 0755, "selabel", "u:object_r:system_file:s0");
+  set_metadata("/system/app/LatinIME/lib/arm64/libjni_latinimegoogle.so", "uid", 0, "gid", 0, "mode", 0644, "selabel", "u:object_r:system_file:s0");
+#  set_metadata("/system/xbin/su", "uid", 0, "gid", 2000, "mode", 0755, "selabel", "u:object_r:su_exec:s0");
+#  symlink("/system/xbin/su", "/system/bin/su");
+else
+  package_extract_dir("system", "/system/system");
+  set_metadata("/system/system/addon.d/78-swipelib.sh", "uid", 0, "gid", 0, "mode", 0755, "selabel", "u:object_r:system_file:s0");
+  set_metadata("/system/system/app/LatinIME/lib/arm64/libjni_latinimegoogle.so", "uid", 0, "gid", 0, "mode", 0644, "selabel", "u:object_r:system_file:s0");
+#  set_metadata("/system/system/xbin/su", "uid", 0, "gid", 2000, "mode", 0755, "selabel", "u:object_r:su_exec:s0");
+#  symlink("/system/xbin/su", "/system/system/bin/su");
+endif;
 
+run_program("/tmp/unmount-system.sh") == 0 || ui_print("Could not unmount /system");
 ui_print("Done");
+set_progress(1.000000);

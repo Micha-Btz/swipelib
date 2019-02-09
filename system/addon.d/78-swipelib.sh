@@ -4,7 +4,7 @@
 
 list_files() {
 cat <<EOF
-lib/libjni_latinimegoogle.so
+app/LatinIME/lib/arm64/libjni_latinimegoogle.so
 EOF
 }
 
