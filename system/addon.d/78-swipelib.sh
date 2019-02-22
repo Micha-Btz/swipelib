@@ -4,7 +4,8 @@
 
 list_files() {
 cat <<EOF
-app/LatinIME/lib/arm64/libjni_latinimegoogle.so
+/system/app/LatinIME/lib/arm64/libjni_latinimegoogle.so
+/system/addon.d/78-swipelib.sh
 EOF
 }
 

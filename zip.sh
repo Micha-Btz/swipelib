@@ -1,6 +1,6 @@
 #! /bin/bash
 FILE=swipelib
-VERSION=v0.5.1
+VERSION=v0.5.2
 CM_Version=lineage-15.1
 NAME=($FILE-$CM_Version-$VERSION)
 
