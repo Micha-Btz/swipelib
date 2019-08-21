@@ -1,7 +1,7 @@
 #! /bin/bash
 FILE=swipelib
-VERSION=v0.5.2
-CM_Version=lineage-15.1
+VERSION=v0.6.2
+CM_Version=lineage-16.0
 NAME=($FILE-$CM_Version-$VERSION)
 
 echo "Making Zip"
@@ -9,7 +9,7 @@ echo "Making Zip"
 zip -r $NAME.zip system/* META-INF/* mount-system.sh unmount-system.sh
 echo "ZIP is Ready"
 echo "Signing ZIP"
-java -jar signapk.jar testkey.x509.pem testkey.pk8 $NAME.zip $NAME-SIGNED.zip
+java -jar /usr/share/signapk/signapk.jar --min-sdk-version 25 buildtools/testkey.x509.pem buildtools/testkey.pk8 $NAME.zip $NAME-SIGNED.zip
 # Cleanup
 echo "Cleaning up"
 rm $NAME.zip

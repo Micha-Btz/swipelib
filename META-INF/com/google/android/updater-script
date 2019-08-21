@@ -1,4 +1,4 @@
-ui_print("Installing swipelib addon...");
+ui_print("Installing swipelib pie addon...");
 ifelse(is_mounted("/system"), unmount("/system"));
 package_extract_file("mount-system.sh", "/tmp/mount-system.sh");
 package_extract_file("unmount-system.sh", "/tmp/unmount-system.sh");
@@ -9,11 +9,12 @@ run_program("/tmp/mount-system.sh") == 0 || abort("Could not mount /system");
 if getprop("ro.build.system_root_image") != "true" then
   package_extract_dir("system", "/system");
   set_metadata("/system/addon.d/78-swipelib.sh", "uid", 0, "gid", 0, "mode", 0755, "selabel", "u:object_r:system_file:s0");
-  set_metadata("/system/app/LatinIME/lib/arm64/libjni_latinimegoogle.so", "uid", 0, "gid", 0, "mode", 0644, "selabel", "u:object_r:system_file:s0");
+  set_metadata("/system/lib64/libjni_latinimegoogle.so", "uid", 0, "gid", 0, "mode", 0755, "selabel", "u:object_r:system_file:s0");
+
 else
-  package_extract_dir("system", "/system/system");
-  set_metadata("/system/system/addon.d/78-swipelib.sh", "uid", 0, "gid", 0, "mode", 0755, "selabel", "u:object_r:system_file:s0");
-  set_metadata("/system/system/app/LatinIME/lib/arm64/libjni_latinimegoogle.so", "uid", 0, "gid", 0, "mode", 0644, "selabel", "u:object_r:system_file:s0");
+  package_extract_dir("system", "/system_root/system");
+  set_metadata("/system_root/system/addon.d/78-swipelib.sh", "uid", 0, "gid", 0, "mode", 0755, "selabel", "u:object_r:system_file:s0");
+  set_metadata("/system_root/system/lib64/libjni_latinimegoogle.so", "uid", 0, "gid", 0, "mode", 0755, "selabel", "u:object_r:system_file:s0");
 endif;
 
 run_program("/tmp/unmount-system.sh") == 0 || ui_print("Could not unmount /system");
